@@ -4,6 +4,10 @@
   a {
     padding: 10px;
   }
+
+  button:hover {
+    background-color: red;
+  }
 </style>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js'></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
@@ -20,12 +24,11 @@
 
       const People = ({ people, onDelete }) => {
         const peopleArr = people.length ? people : [];
-        console.log(peopleArr)
         return (
           <ul>
             {peopleArr.map((person, idx) => {
               return <div key={ idx } >
-                <li >{person.name}</li><button type='button' onClick={ ()=> onDelete(idx)}>X</button>
+                <button type='button' onClick={ ()=> onDelete(idx)}>{person.name}</button>
                 </div>
             })}
           </ul>
@@ -39,6 +42,7 @@
             people: []
           };
           this.onDelete = this.onDelete.bind(this);
+          this.onCreate = this.onCreate.bind(this);
         }
 
       async componentDidMount () {
@@ -57,18 +61,25 @@
         this.setState({ people })
       }
 
+      onCreate (person) {
+        const updatePeople = [...this.state.people, person];
+        this.setState = { updatePeople }
+      }
+
         render(){
           const { people } = this.state;
-          const { onDelete } = this;
+          const { onDelete, onCreate } = this;
           return (
             <HashRouter>
               <div>
                 <h1>Star Wars CRD (no U)</h1>
                 <Link to='/'>Home</Link>
                 <Link to='/people'>People</Link>
+                <Link to='/create'>Create</Link>
               </div>
               <Route path='/' exact component={ Home } />
               <Route path='/people' render={ () => <People people={ people } onDelete={ onDelete } /> } />
+
             </HashRouter>
           )
         }
@@ -79,3 +90,33 @@
     </script>
   </body>
 </html>
+
+
+<!-- const Create = ({ onCreate }) => {
+  constructor () {
+    super();
+    this.state = {
+      newName: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(event) {
+    const { name } = event.target;
+    this.setState(
+      {newName: name}
+    )
+  }
+
+  return (
+    console.log(this.state)
+    <form>
+      <label htmlFor="name">Name:
+        <input type='text' name='name' vaule={ this.state.newName } onChange={ this.handleChange }/>
+      </label>
+      <input type='submit' value='Submit' onClick={ ()=> onCreate(this.state.newName)} />
+    </form>
+  )
+} -->
+
+<!-- <Route path='/create' render={ () => <Create onCreate={ onCreate } />} /> -->
