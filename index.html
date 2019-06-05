@@ -37,29 +37,33 @@
       }
 
       class Create extends React.Component {
-        constructor () {
-          super();
+        constructor (props) {
+          super(props);
           this.state = {
-            newName: ''
+            people: ''
           }
           this.onChange = this.onChange.bind(this)
         }
 
         onChange(event) {
           this.setState({
-            newName: event.target.value
+            people: event.target.value
           })
         }
 
         render () {
           const { onChange } = this
+          const { onCreate } = this.props
           console.log(this.state)
           return (
             <form>
               <label htmlFor="name">Name:
-                <input type='text' name='name' value={ this.state.newName } onChange={ onChange } />
+                <input type='text' name='name' value={ this.state.people } onChange={ onChange } />
               </label>
-              <input type='submit' value='Submit' />
+
+              <input type='submit' value='Submit' onClick={ (ev)=> {
+                ev.preventDefault()
+                return onCreate(this.state)}} />
             </form>
           )
       }
@@ -92,8 +96,9 @@
       }
 
       onCreate (person) {
-        const updatePeople = [...this.state.people, person];
-        this.setState = { updatePeople }
+        console.log('button was clicked')
+        const people = [...this.state.people, person]
+        console.log(people)
       }
 
         render(){
