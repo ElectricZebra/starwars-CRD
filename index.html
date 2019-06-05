@@ -26,6 +26,7 @@
         const peopleArr = people.length ? people : [];
         return (
           <ul>
+            <h2>Click on a person to delete them!</h2>
             {peopleArr.map((person, idx) => {
               return <div key={ idx } >
                 <button type='button' onClick={ ()=> onDelete(idx)}>{person.name}</button>
@@ -34,6 +35,35 @@
           </ul>
         )
       }
+
+      class Create extends React.Component {
+        constructor () {
+          super();
+          this.state = {
+            newName: ''
+          }
+          this.onChange = this.onChange.bind(this)
+        }
+
+        onChange(event) {
+          this.setState({
+            newName: event.target.value
+          })
+        }
+
+        render () {
+          const { onChange } = this
+          console.log(this.state)
+          return (
+            <form>
+              <label htmlFor="name">Name:
+                <input type='text' name='name' value={ this.state.newName } onChange={ onChange } />
+              </label>
+              <input type='submit' value='Submit' />
+            </form>
+          )
+      }
+    }
 
       class App extends React.Component {
         constructor () {
@@ -79,7 +109,7 @@
               </div>
               <Route path='/' exact component={ Home } />
               <Route path='/people' render={ () => <People people={ people } onDelete={ onDelete } /> } />
-
+              <Route path='/create' render={ () => <Create onCreate={ onCreate } />} />
             </HashRouter>
           )
         }
