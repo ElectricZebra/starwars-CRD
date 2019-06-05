@@ -40,14 +40,14 @@
         constructor (props) {
           super(props);
           this.state = {
-            people: ''
+            name: ''
           }
           this.onChange = this.onChange.bind(this)
         }
 
         onChange(event) {
           this.setState({
-            people: event.target.value
+            name: event.target.value
           })
         }
 
@@ -58,7 +58,7 @@
           return (
             <form>
               <label htmlFor="name">Name:
-                <input type='text' name='name' value={ this.state.people } onChange={ onChange } />
+                <input type='text' name='name' value={ this.state.name } onChange={ onChange } />
               </label>
 
               <input type='submit' value='Submit' onClick={ (ev)=> {
@@ -99,6 +99,7 @@
         console.log('button was clicked')
         const people = [...this.state.people, person]
         console.log(people)
+        this.setState({ people });
       }
 
         render(){
