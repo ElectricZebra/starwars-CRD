@@ -46,6 +46,7 @@
         }
 
         onChange(event) {
+          // This is perfect for one input, but for future forms where you have multiple inputs, you can do [event.target.name]: event.target.value
           this.setState({
             name: event.target.value
           })
@@ -60,7 +61,7 @@
               <label htmlFor="name">Name:
                 <input type='text' name='name' value={ this.state.name } onChange={ onChange } />
               </label>
-
+              {/* You can also put this inside the <form> tag to make it call the function on form submission */}
               <input type='submit' value='Submit' onClick={ (ev)=> {
                 ev.preventDefault()
                 return onCreate(this.state)}} />
@@ -91,11 +92,13 @@
       }
 
       onDelete (idx) {
+        // Great job not mutating state directly!
         const people = this.state.people.filter((person, _idx) => _idx !== idx);
         this.setState({ people })
       }
 
       onCreate (person) {
+        // try to clear out console logs when done developing
         console.log('button was clicked')
         const people = [...this.state.people, person]
         console.log(people)
@@ -105,6 +108,7 @@
         render(){
           const { people } = this.state;
           const { onDelete, onCreate } = this;
+          // Great routes and rendering
           return (
             <HashRouter>
               <div>
@@ -127,6 +131,7 @@
   </body>
 </html>
 
+<!-- Try not to have commented-out code left over -->
 
 <!-- const Create = ({ onCreate }) => {
   constructor () {
